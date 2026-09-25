@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import '../../workspace/_shared/report.css'
+import '../styles/report.css'
 import { downloadImage } from '../lib/download'
 
 export default function ImagePreview({ url, title, onClose }: { url: string; title: string; onClose: () => void }) {
