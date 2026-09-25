@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "workspace-preview",
-      "runtimeExecutable": "npm.cmd",
+      "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--", "--open=false"],
       "port": 3009
     }
