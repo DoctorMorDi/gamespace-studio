@@ -1,4 +1,12 @@
-# Mr. Mak Workspace
+# GAMESPACE-STUDIO
+
+> This repository is a cloned fork of Mr. Mak Workspace by witnesstodark (MIT License). The repository might be useful for Hermes-Asset-Studio project. At the very least we will learn from it, and probably get ideas and inspirations from some of the features.
+
+
+
+All text below the line originates from the original repository. Ditto with regards to other files in this repo.
+
+---
 
 This repository is a desktop workspace and a starter context for its owner.
 Read `context/preferences.md`, `context/goals.md`, and the relevant project before

@@ -1,0 +1,4 @@
+/* Shared report styles, inlined by Vite's CSS pipeline. Importing the file
+   directly from TS collides with the public/workspace junction in dev, which
+   serves it as raw text/css instead of a JS module. */
+@import '../../workspace/_shared/report.css';
