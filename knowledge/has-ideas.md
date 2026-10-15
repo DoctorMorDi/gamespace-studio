@@ -80,7 +80,61 @@ Treat it as its own stage with its own acceptance: Blender + DNA tooling
 validation. Open question: what the UE5 Python API and MetaHuman tooling can
 automate in the version in use. Research before deciding.
 
+## Positioning: HAS is not built on Mr. Mak
+
+Mr. Mak is a general agent-work shell (chats, cards, files) for game development;
+its pipeline skills are loose recipes. HAS is a domain system: a production line
+with strict requirements for every intermediate. Borrow the patterns (receipts,
+state file, acceptance levels), not the app. If an agent shell is wanted later,
+HAS should be a module it talks to (MCP or API), never dependent on one shell.
+
+## Modular stages as contracts
+
+Each stage (multiview, segmentation, reconstruction, retopo, UV, texturing,
+rigging, export) is a module with a fixed contract:
+
+- **Inputs:** which artifacts it needs, and in which approved version.
+- **Outputs:** what it produces, format and conventions.
+- **Acceptance:** what must hold before the next stage may consume it.
+- **Executors:** ComfyUI workflow, Blender script or cloud API. Several
+  executors can satisfy the same contract (swap Tripo for Hunyuan or a local
+  model without the rest noticing). This is what makes single-component
+  regeneration possible.
+
+## Target profiles (UE5/MetaHuman first, Unity possible)
+
+The engine choice constrains upstream stages, so make it explicit: a **target
+profile** set at project start that pushes requirements backwards.
+
+| | UE / MetaHuman | Unity |
+|---|---|---|
+| Topology | Locked to the MetaHuman template (DNA / Mesh to MetaHuman) | Free, but must skin well |
+| Rig | MetaHuman skeleton + DNA (facial rig) | Humanoid avatar (bone mapping) |
+| Textures | Packed channels per UE convention | Different packing, differs URP vs HDRP |
+| Hair | Strand groom (UE Groom) | Usually card/mesh hair |
+| Scale / axes | cm, Z up | m, Y up |
+
+MetaHuman is the strongest constraint (locks topology, rig, face); Unity is
+more forgiving. Verify table details against the versions in use before
+encoding them.
+
+**Branch late:** keep sources target-neutral as long as possible. Concept art,
+multiview references and high-poly sculpt are mostly engine-agnostic; the fork
+happens around retopo and rigging, so a MetaHuman branch and a Unity branch can
+split from the same approved high-poly.
+
+Open question: Epic changed the MetaHuman license in 2025 to allow use outside
+Unreal. If confirmed, Unity could be an export variant of the MetaHuman line
+rather than a separate pipeline.
+
+For now: treat the target as a parameter (e.g. `target: ue5-metahuman`), not an
+assumption baked into the core, and put profile requirements into the
+acceptance criteria of affected stages. No Unity work needed yet.
+
 ## Possible next steps
+
+- Continue HAS work in its own clean repository (decided 2026-09-26); carry
+  this note over as the starting point.
 
 - Sketch the data model: artifact/job/receipt manifest, status model
   (generated/approved/stale), and how a ComfyUI run is registered. Use the
